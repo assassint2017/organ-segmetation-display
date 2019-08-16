@@ -28,7 +28,7 @@ using namespace std;
 
 int main()
 {
-	// ÉèÖÃ¸ÎÔà°Ë¶ÎµÄÑÕÉ«
+	// è®¾ç½®è‚è„å…«æ®µçš„é¢œè‰²
 	double colors[8][3] = {
 		{1, 0, 0},
 		{0, 1, 0},
@@ -41,12 +41,12 @@ int main()
 
 	string fileName = "../data/liversegmentresult.nii.gz";
 
-	// ¶ÁÈ¡Ô­Ê¼Êı¾İ
+	// è¯»å–åŸå§‹æ•°æ®
 	vtkSmartPointer<vtkNIFTIImageReader> niiReader = vtkSmartPointer<vtkNIFTIImageReader>::New();
 	niiReader->SetFileName(fileName.c_str());
 	niiReader->Update();
 	
-	// Ìå»æÖÆ²¿·Ö
+	// ä½“ç»˜åˆ¶éƒ¨åˆ†
 	vtkSmartPointer<vtkImageConnectivityFilter> connectivityFilter = vtkSmartPointer<vtkImageConnectivityFilter>::New();
 	connectivityFilter->SetScalarRange(1, 8);
 	connectivityFilter->SetLabelModeToConstantValue();
@@ -95,8 +95,8 @@ int main()
 	volume->SetMapper(Mapper);
 	volume->SetProperty(property);
 
-	// Ãæ»æÖÆ²¿·Ö
-	vector<vtkSmartPointer<vtkActor>> Actors;
+	// é¢ç»˜åˆ¶éƒ¨åˆ†
+	vector< vtkSmartPointer<vtkActor> > Actors;
 	for (int surfaceIndex = 1; surfaceIndex < 8; surfaceIndex++)
 	{
 		vtkSmartPointer<vtkImageConnectivityFilter> surfaceFilter = vtkSmartPointer<vtkImageConnectivityFilter>::New();
@@ -140,13 +140,13 @@ int main()
 		Actors.push_back(Actor);
 	}
 
-	// Ìå»æÖÆrenderer
+	// ä½“ç»˜åˆ¶renderer
 	vtkSmartPointer<vtkRenderer> renderer1 = vtkSmartPointer<vtkRenderer>::New();
 	renderer1->AddActor(volume);
 	renderer1->SetBackground(0.1, 0.2, 0.4);
 	renderer1->SetViewport(0, 0, 0.49, 1);
 
-	// Ãæ»æÖÆrenderer
+	// é¢ç»˜åˆ¶renderer
 	vtkSmartPointer<vtkRenderer> renderer2 = vtkSmartPointer<vtkRenderer>::New();
 	for (int i = 0; i < Actors.size(); i++)renderer2->AddActor(Actors[i]);
 	renderer2->SetActiveCamera(renderer1->GetActiveCamera());
